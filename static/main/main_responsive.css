@@ -1,0 +1,55 @@
+.show-links span.desc {
+    width: 150px;
+    min-height: 10px;
+}
+
+
+@media screen and (min-width:600px) {
+
+    div.app-name {
+        box-sizing: border-box;
+        width: 202px;
+    }
+
+    nav {
+        flex: 1;
+    }
+
+    div.small-header {
+        width: 52px;
+        overflow: hidden;
+    }
+
+
+    .small-header .full-name {
+        display: none;
+        width: 0px;
+    }
+
+    .hide-links span.desc {
+        width: 0px;
+        height: 0;
+        transition: 0.5s ease;
+    }
+}
+
+@media screen and (max-width:599px) {
+    header {
+        flex-direction: column;
+    }
+
+    /* .page-content aside {
+        overflow: hidden;
+    } */
+
+    aside.show-links {
+        width: 250px;
+    }
+
+    aside.hide-links {
+        width: 0;
+        overflow: hidden;
+    }
+
+
+}

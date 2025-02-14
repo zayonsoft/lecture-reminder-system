@@ -1,0 +1,183 @@
+{% extends 'main/main.html' %}
+{% block content %}
+
+<style>
+    section.home-cover {
+        font-family: system-ui;
+        padding: 5px;
+        display: grid;
+        gap: 15px;
+        max-height: 80vh;
+        overflow-y: scroll;
+    }
+
+    section.home-cover::-webkit-scrollbar {
+        background-color: transparent;
+        width: 5px;
+    }
+
+    section.home-cover::-webkit-scrollbar-thumb {
+        background-color: grey;
+    }
+
+    div.user-details {
+        display: grid;
+        gap: 10px;
+    }
+
+    p.each-detail {
+        padding: 10px;
+        padding-right: 25px;
+        background-color: rgb(0, 65, 109);
+        color: aliceblue;
+        width: max-content;
+        border-radius: 0px 15px 15px 0px;
+        box-shadow: 1px 2px 2px grey;
+    }
+
+    div.task-list-cover {
+        text-align: center;
+        display: grid;
+        gap: 20px;
+        max-width: 100%;
+        padding: 8px;
+        box-shadow: 0px 0px 2px grey;
+        border-radius: 4px;
+        overflow-x: scroll;
+    }
+
+    div.task-list-cover::-webkit-scrollbar {
+        background: transparent;
+        height: 7px;
+    }
+
+    div.task-list-cover::-webkit-scrollbar-thumb {
+        background: grey;
+    }
+
+    .section-header {
+        font-weight: 400;
+        font-family: system-ui;
+        font-size: 1.3rem;
+        color: rgb(10, 33, 51);
+    }
+
+    .task-table {
+        max-width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+    }
+
+    .task-table th,
+    .task-table td {
+        padding: 8px;
+    }
+
+    .task-table th {
+        background: rgb(0, 65, 109);
+        font-weight: 400;
+        color: aliceblue;
+        font-size: 0.95rem;
+    }
+
+    .task-table td {
+        font-size: 0.9rem;
+        font-family: system-ui;
+        color: #252525;
+    }
+
+    .task-table tr {
+        background: rgb(221, 221, 221);
+    }
+
+    .task-table tr:nth-child(2n) {
+        background: rgb(255, 244, 244);
+    }
+
+    .view-task,
+    .perform-task {
+        background-color: rgb(0, 65, 109);
+        padding: 7px 10px;
+        border-radius: 3px;
+        display: block;
+        width: max-content;
+        color: whitesmoke;
+        text-decoration: none;
+        font-size: 0.78rem;
+        margin: auto;
+    }
+
+    .view-task:hover,
+    .perform-task:hover {
+        background-color: rgb(37, 76, 102);
+    }
+</style>
+
+<section class="home-cover">
+    <div class="task-list-cover">
+        <h2 class="section-header">Previous or Expired Tasks</h2>
+        <table class="task-table">
+            {% for message in messages %}
+            {% if message.tags == "success" %}
+            <p class="response-message success">{{message}}</p>
+            {% else %}
+            <p class="response-message error">{{message}}</p>
+            {% endif %}
+            {% endfor %}
+            <colgroup>
+                <col style="width: 5%;">
+                <col style="width: 15%;">
+                <col style="width: 30%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+            </colgroup>
+
+            <tr>
+                <th>S/N</th>
+                <th>Task</th>
+                <th>Description</th>
+                <th>Course</th>
+                <th>Date Added</th>
+                <th>Due Date</th>
+                <th>View</th>
+                <th>Status</th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td><b>{{task.task_type.name}}</b></td>
+                <td>{{task.description | truncatechars:30 }}</td>
+                <td>{{task.course.course_code}}</td>
+                <td>{{task.date_created}}<dth>
+                <td>{{task.due_date}}<dth>
+                <td> <a href="{% url 'view_task' task.id %}" class="view-task">View</a> </td>
+                <td>
+                    {% if task in performed_tasks %}
+                    <span
+                        style="background: darkgreen; color: whitesmoke; border-radius: 50%; display: inline-block;padding: 4px; height: 30px;width: 30px; ">
+                        <i class="fa fa-check"></i> </span>
+                    {% else %}
+                    <span
+                        style="background: darkred; color: whitesmoke; border-radius: 50%; display: inline-block;padding: 4px; height: 30px;width: 30px; ">
+                        <i class="fa fa-times"></i>
+                    </span>
+
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+
+            {% if tasks.count == 0 %}
+            <tr>
+                <td colspan="8">No Expired or Previous Tasks</td>
+            </tr>
+            {% endif %}
+
+        </table>
+    </div><!-- div.task-list-cover -->
+</section><!-- section.home-cover -->
+
+{% endblock %}

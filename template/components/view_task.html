@@ -1,0 +1,115 @@
+{% extends 'main/main.html' %}
+{% block content %}
+
+<style>
+    section.view-task-cover {
+        font-family: system-ui;
+        box-shadow: 0px 0px 2px #505050;
+        padding: 10px;
+        display: grid;
+        gap: 15px;
+        width: 95%;
+        max-width: 580px;
+        margin: auto;
+        box-sizing: border-box;
+        max-height: 80vh;
+        overflow-y: scroll;
+    }
+
+    section.view-task-cover::-webkit-scrollbar {
+        background-color: transparent;
+        width: 5px;
+    }
+
+    section.view-task-cover::-webkit-scrollbar-thumb {
+        background-color: grey;
+    }
+
+    .task-description-cover {
+        display: grid;
+        gap: 10px;
+    }
+
+    .desc-text {
+        background: rgb(44, 82, 139);
+        padding: 10px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        color: rgb(231, 231, 231);
+        font-size: 0.9rem;
+    }
+
+    .header {
+        font-weight: 500;
+        color: rgb(0, 27, 102);
+    }
+
+    div.attachment {
+        display: grid;
+        gap: 3px;
+    }
+
+    .download-icon {
+        text-decoration: none;
+        color: rgb(44, 82, 139);
+        transition: 0.5s ease;
+    }
+
+    .download-icon:hover {
+        color: rgb(18, 38, 68);
+    }
+
+    p.due-date {
+        color: #252525;
+        font-family: 0.85rem;
+    }
+</style>
+
+<section class="view-task-cover">
+    <div class="task-description-cover">
+        <h2 class="header">Task Description</h2>
+        <p class="desc-text">
+            {{task.description | linebreaksbr }}
+        </p>
+    </div><!-- div.task-description -->
+
+
+
+    <div class="attachment">
+        <p class="header">Attached File:</p>
+        <div class="file-icon">
+            {% if task.attachment %}
+            <p class="file-icon">
+                <a class="download-icon" download href="{{task.attachment.url}}">
+                    <i class="fa fa-file-download fa-4x"></i>
+                </a>
+            </p>
+            {% endif %}
+        </div>
+    </div><!-- div.attachment -->
+
+    <div class="task-attribute">
+        <p class="header">Task Type:</p>
+        <p class="task-text">{{task.task_type.name}}</p>
+    </div>
+
+    <div class="task-attribute">
+        <p class="header">Course:</p>
+        <p class="task-text">{{task.course.course_code}}</p>
+    </div>
+
+    <div class="task-attribute">
+        <p class="header">Department:</p>
+        <p class="task-text">{{task.department.name}}</p>
+    </div>
+
+    <div class="due-date">
+        <p class="due-date"> <b>Due Date:</b> {{task.due_date}}</p>
+    </div><!-- div.due-date -->
+    <div class="due-date">
+        <p class="due-date"> <b>Last Edited:</b> {{task.last_modified}}</p>
+    </div><!-- div.due-date -->
+
+
+</section><!-- section.view-task-cover -->
+{% endblock %}

@@ -1,0 +1,147 @@
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    section.confirmation-dialog-overlay {
+        background: rgba(0, 0, 0, 0.8);
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        z-index: 500;
+    }
+
+    div.confirm-dialog-cover {
+        padding: 7px;
+        background-color: whitesmoke;
+        width: 90%;
+        max-width: 310px;
+        font-family: system-ui;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        display: grid;
+        gap: 15px;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+
+    div.confirmation-header-cover {
+        text-align: center;
+        display: grid;
+        gap: 2px;
+    }
+
+    .confirmation-header {
+        color: #131f29;
+        padding: 6px 3px;
+    }
+
+    .confirmation-text-cover {
+        width: 95%;
+        margin: auto;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .confirmation-text {
+        font-size: 0.93rem;
+        color: #252525;
+        padding: 10px 5px;
+    }
+
+    div.confirmation-cover {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3px;
+    }
+
+    .confirmation-cover button {
+        height: 35px;
+        border: none;
+        font-family: system-ui;
+        font-size: 0.8rem;
+        transition: 0.5s ease;
+    }
+
+
+    .confirmation-cover .cancel-btn {
+        background-color: #383f66;
+        color: whitesmoke;
+    }
+
+    .confirmation-cover .cancel-btn:hover {
+        background-color: #0f142e;
+    }
+
+    .confirmation-cover .confirm-btn {
+        background-color: transparent;
+        color: rgb(100, 43, 2);
+    }
+
+    .confirmation-cover .confirm-btn:hover {
+        background-color: darkred;
+        color: whitesmoke;
+    }
+</style>
+
+<section class="confirmation-dialog-overlay" style="display: none;">
+    <div class="confirm-dialog-cover">
+        <div class="confirmation-header-cover">
+            <!-- <p class="confirmation-icon">!</p> -->
+            <h3 class="confirmation-header">Are You Sure?</h3>
+        </div><!-- div.confirmation-header -->
+
+        <div class="confirmation-text-cover">
+            <p class="confirmation-text">Are You Sure You Want to Delete This Item?</p>
+        </div><!-- div.confirmation-text-cover -->
+
+        <div class="confirmation-cover">
+            <button type="button" class="cancel-btn">Cancel</button>
+            <button type="button" class="confirm-btn"> Confirm </button>
+        </div><!-- div.confirmation-cover -->
+
+    </div><!-- div.confirm-dialog-cover -->
+</section><!-- section.confirmation-dialog-cover -->
+
+
+<script>
+
+    function showConfirmationDialog(confirmation_question) {
+        let confirmationOverlay = document.querySelector("section.confirmation-dialog-overlay");
+        let confirmTextP = confirmationOverlay.querySelector(".confirmation-text");
+        confirmTextP.innerHTML = confirmation_question;
+        confirmationOverlay.style.display = "block";
+    }
+
+    function hideConfirmationDialog() {
+        let confirmationOverlay = document.querySelector("section.confirmation-dialog-overlay");
+        confirmationOverlay.style.display = "none";
+    }
+
+    function activateCloseConfirmation() {
+        let confirmationOverlay = document.querySelector("section.confirmation-dialog-overlay");
+        let closeBtn = confirmationOverlay.querySelector(".confirmation-cover .cancel-btn");
+        closeBtn.addEventListener("click", () => {
+            hideConfirmationDialog();
+        });
+    }
+
+    function activateConfirmClose() {
+        let confirmBtn = document.querySelector(".confirmation-cover .confirm-btn");
+        confirmBtn.addEventListener("click", () => {
+            hideConfirmationDialog();
+        });
+    }
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        activateCloseConfirmation();
+        activateConfirmClose();
+    });
+
+</script>

@@ -1,0 +1,81 @@
+{% extends 'main/main.html' %}
+{% block content %}
+
+<style>
+    section.home-cover {
+        font-family: system-ui;
+        padding: 5px;
+        display: grid;
+        gap: 15px;
+        max-height: 80vh;
+        overflow-y: scroll;
+    }
+
+    section.home-cover::-webkit-scrollbar {
+        background-color: transparent;
+        width: 5px;
+    }
+
+    section.home-cover::-webkit-scrollbar-thumb {
+        background-color: grey;
+    }
+
+    div.user-details {
+        display: grid;
+        gap: 10px;
+    }
+
+    p.each-detail {
+        padding: 10px;
+        padding-right: 25px;
+        background-color: rgb(0, 65, 109);
+        color: aliceblue;
+        width: max-content;
+        border-radius: 0px 15px 15px 0px;
+        box-shadow: 1px 2px 2px grey;
+    }
+</style>
+
+<style>
+    div.update-profile {
+        padding: 8px 5px;
+        border-radius: 3px;
+        background-color: #070707;
+        color: white;
+    }
+
+    div.update-profile a {
+        text-decoration: none;
+        background-color: #f0f0f0;
+        color: black;
+        padding: 5px 7px;
+        border-radius: 3px;
+        display: inline-block;
+        font-size: 0.85rem;
+        transition: 0.5s ease;
+    }
+
+    div.update-profile a:hover {
+        background-color: #d1d1d1;
+    }
+</style>
+
+<section class="home-cover">
+    <div class="user-details">
+        <p class="each-detail">
+            Welcome, Admin {{request.user.username}}
+            Admin: {{request.user.profile.profile_id}}
+        </p>
+    </div>
+    <div class="task-list-cover">
+
+        {% if not request.user.profile.is_updated %}
+        <div class="update-profile">
+            <p> Profile Not Updated! <a href="{% url 'update_lecturer_profile' %}">Update Profile</a> </p>
+        </div><!-- div.update-profile -->
+        {% endif %}
+
+    </div><!-- div.task-list-cover -->
+</section><!-- section.home-cover -->
+
+{% endblock %}

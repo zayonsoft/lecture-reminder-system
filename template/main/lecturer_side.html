@@ -1,0 +1,39 @@
+<li>
+    <a href="{% url 'lecturer_dashboard' %}"
+        class="nav-link {% if active_name == 'home' %}active{% endif %} tool-tipper"> <span class="icon"> <i
+                class="fa fa-home"></i> </span> <span class="desc">Home</span>
+        <p class="tool-tip">Home</p>
+    </a>
+</li>
+
+<li>
+    <a href="{% url 'my_tasks' %}" class="nav-link {% if active_name == 'my_tasks' %}active{% endif %} tool-tipper">
+        <span class="icon"> <i class="fa fa-tasks"></i> </span> <span class="desc">Tasks</span>
+        <p class="tool-tip">Created Tasks</p>
+    </a>
+</li>
+<li>
+    <a href="{% url 'lecturer_past_tasks' %}"
+        class="nav-link {% if active_name == 'previous_responses' %}active{% endif %} tool-tipper">
+        <span class="icon"> <i class="fa fa-backward"></i> </span> <span class="desc">Previous
+            Tasks</span>
+        <p class="tool-tip">Expired Tasks</p>
+    </a>
+</li>
+<li>
+    <a href="{% url 'lecturer_future_tasks' %}"
+        class="nav-link {% if active_name == 'coming_tasks' %}active{% endif %} tool-tipper">
+        <span class="icon"> <i class="fa fa-forward"></i> </span> <span class="desc">Future
+            Tasks</span>
+        <p class="tool-tip">Future Tasks</p>
+    </a>
+</li>
+
+<li>
+    <a href="{% url 'update_lecturer_profile' %}"
+        class="nav-link {% if active_name == 'update_profile' %}active{% endif %} tool-tipper">
+        <span class="icon"> <i class="fa fa-user-cog"></i> </span> <span class="desc">Update
+            Profile</span>
+        <p class="tool-tip">Update Profile</p>
+    </a>
+</li>

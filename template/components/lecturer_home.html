@@ -1,0 +1,199 @@
+{% extends 'main/main.html' %}
+{% block content %}
+
+<style>
+    section.home-cover {
+        font-family: system-ui;
+        padding: 5px;
+        display: grid;
+        gap: 15px;
+        max-height: 80vh;
+        overflow-y: scroll;
+    }
+
+    section.home-cover::-webkit-scrollbar {
+        background-color: transparent;
+        width: 5px;
+    }
+
+    section.home-cover::-webkit-scrollbar-thumb {
+        background-color: grey;
+    }
+
+    div.user-details {
+        display: grid;
+        gap: 10px;
+    }
+
+    p.each-detail {
+        padding: 10px;
+        padding-right: 25px;
+        background-color: rgb(0, 65, 109);
+        color: aliceblue;
+        width: max-content;
+        border-radius: 0px 15px 15px 0px;
+        box-shadow: 1px 2px 2px grey;
+    }
+
+    div.task-list-cover {
+        text-align: center;
+        display: grid;
+        gap: 20px;
+        max-width: 100%;
+        padding: 8px;
+        box-shadow: 0px 0px 2px grey;
+        border-radius: 4px;
+        overflow-x: scroll;
+    }
+
+    div.task-list-cover::-webkit-scrollbar {
+        background: transparent;
+        height: 7px;
+    }
+
+    div.task-list-cover::-webkit-scrollbar-thumb {
+        background: grey;
+    }
+
+    .section-header {
+        font-weight: 400;
+        font-family: system-ui;
+        font-size: 1.3rem;
+        color: rgb(10, 33, 51);
+    }
+
+    .task-table {
+        max-width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+    }
+
+    .task-table th,
+    .task-table td {
+        padding: 8px;
+    }
+
+    .task-table th {
+        background: rgb(0, 65, 109);
+        font-weight: 400;
+        color: aliceblue;
+        font-size: 0.95rem;
+    }
+
+    .task-table td {
+        font-size: 0.9rem;
+        font-family: system-ui;
+        color: #252525;
+    }
+
+    .task-table tr {
+        background: rgb(221, 221, 221);
+    }
+
+    .task-table tr:nth-child(2n) {
+        background: rgb(255, 244, 244);
+    }
+
+    .view-task,
+    .perform-task {
+        background-color: rgb(0, 65, 109);
+        padding: 7px 10px;
+        border-radius: 3px;
+        display: block;
+        width: max-content;
+        color: whitesmoke;
+        text-decoration: none;
+        font-size: 0.78rem;
+        margin: auto;
+    }
+
+    .view-task:hover,
+    .perform-task:hover {
+        background-color: rgb(37, 76, 102);
+    }
+</style>
+
+<style>
+    div.update-profile {
+        padding: 8px 5px;
+        border-radius: 3px;
+        background-color: #070707;
+        color: white;
+    }
+
+    div.update-profile a {
+        text-decoration: none;
+        background-color: #f0f0f0;
+        color: black;
+        padding: 5px 7px;
+        border-radius: 3px;
+        display: inline-block;
+        font-size: 0.85rem;
+        transition: 0.5s ease;
+    }
+
+    div.update-profile a:hover {
+        background-color: #d1d1d1;
+    }
+</style>
+
+<section class="home-cover">
+    <div class="user-details">
+        <p class="each-detail">
+            Welcome, {{request.user.username}}
+        </p>
+    </div>
+    <div class="task-list-cover">
+
+        {% if not request.user.profile.is_updated %}
+        <div class="update-profile">
+            <p> Profile Not Updated! <a href="{% url 'update_lecturer_profile' %}">Update Profile</a> </p>
+        </div><!-- div.update-profile -->
+        {% endif %}
+
+        <h2 class="section-header">Tasks Set For Today {{today_date}} </h2>
+        <table class="task-table">
+
+            <colgroup>
+                <col style="width: 5%;">
+                <col style="width: 15%;">
+                <col style="width: 30%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+            </colgroup>
+
+            <tr>
+                <th>S/N</th>
+                <th>Task</th>
+                <th>Description</th>
+                <th>Course</th>
+                <th>Date Added</th>
+                <th>Due Date</th>
+                <th>View</th>
+                <th></th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td>1</td>
+                <td><b>{{task.task_type}}</b></td>
+                <td> {{task.description | truncatechars:30 }} </td>
+                <td>{{task.course.course_code}}</td>
+                <td>{{task.date_created}}<dth>
+                <td> {{task.due_date}} <dth>
+                <td> <a href="{% url 'view_task' task.id %}" class="view-task">View</a> </td>
+                <td> <a href="{% url 'edit_task' task.id %}" class="perform-task">Edit</a> </td>
+            </tr>
+            {% endfor %}
+            {% if tasks.count == 0 %}
+            <tr>
+                <td colspan="8">No Tasks Set For Today</td>
+            </tr>
+            {% endif %}
+        </table>
+    </div><!-- div.task-list-cover -->
+</section><!-- section.home-cover -->
+
+{% endblock %}

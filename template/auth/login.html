@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN TO REMINDER SYSTEM</title>
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/auth/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <link rel="shortcut icon" href="{% static 'styles/images/aaua_logo.png' %}" type="image/x-icon">
+</head>
+
+<body>
+    <section class="form-background">
+        <div class="auth-form-cover">
+            <div class="logo-cover">
+                <div class="logo">
+                    <!-- <img class="logo-image" src="{% static 'styles/images/aaua_logo.png' %}" alt=""> -->
+                </div>
+                <p class="page-name text-right">LECTURE REMINDER SYSTEM</p>
+            </div>
+            <form method="POST" action="" class="auth-form">
+                {% for message in messages %}
+                {% if message.tags == "success" %}
+                <p class="response-message success">{{message}}</p>
+                {% else %}
+                <p class="response-message error">{{message}}</p>
+                {% endif %}
+                {% endfor %}
+                {% csrf_token %}
+                <div class="each-input">
+                    <span class="icon"> <i class="fa fa-user"></i> </span>
+                    <span class="input">
+                        <input type="text" name="username" placeholder="Username or Email" required="required">
+                    </span>
+                </div>
+                <div class="each-input">
+                    <span class="icon"> <i class="fa fa-key"></i> </span>
+                    <span class="input">
+                        <input type="password" name="password" placeholder="Password" required="required">
+                    </span>
+                </div>
+
+                <div class="submit-cover">
+                    <button type="submit">LOGIN</button>
+                </div>
+            </form>
+
+            <p class="footer">Powered By zayonSoft, <span class="insert-date"></span>.</p>
+
+        </div><!-- div.auth-form-cover -->
+    </section><!-- section.form-background -->
+
+</body>
+
+<script src="{% static 'general/auto_date.js' %}"></script>
+
+</html>

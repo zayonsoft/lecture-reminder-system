@@ -1,0 +1,234 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background-color: rgb(235, 248, 255);
+}
+
+
+.response-message {
+    font-family: Verdana;
+    text-align: center;
+    color: whitesmoke;
+    padding: 5px;
+    font-size: 0.8rem;
+}
+
+.error {
+    background: red;
+}
+
+.success {
+    background-color: green;
+}
+
+
+div.overall {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+header {
+    display: flex;
+}
+
+div.app-name {
+    padding: 10px;
+    min-height: 40px;
+    text-align: center;
+    display: grid;
+    align-items: center;
+    background-color: rgb(0, 52, 119);
+    transition: 0.5s ease;
+    cursor: pointer;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.app-name span.icon {
+    color: aliceblue;
+
+}
+
+.app-name .title {
+    font-weight: 400;
+    font-size: 1rem;
+    color: aliceblue;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(204, 218, 231);
+    align-items: center;
+    padding: 5px 10px;
+}
+
+
+
+.bar-controller {
+    background: transparent;
+    border: none;
+    padding: 10px;
+    font-size: 1.2rem;
+    transition: 0.5s ease;
+    color: rgb(0, 65, 150);
+}
+
+.bar-controller:hover {
+    background: rgb(182, 193, 204);
+    color: rgb(22, 20, 20);
+}
+
+.user-area a {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 7px;
+    text-decoration: none;
+    color: rgb(27, 73, 110);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    transition: 0.5s ease;
+}
+
+.user-area a:hover {
+    background: rgb(182, 193, 204);
+}
+
+.profile-img {
+    width: 30px;
+    height: 30px;
+}
+
+section.page-content {
+    flex: 1;
+    display: flex;
+    transition: 0.5s ease;
+    position: relative;
+}
+
+.page-content aside {
+    background: rgb(204, 218, 231);
+    transition: 0.5s ease;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+ul.nav-links-cover {
+    list-style: none;
+    display: grid;
+    gap: 5px;
+    transition: 0.5s ease;
+}
+
+.nav-link {
+    display: flex;
+    padding: 10px;
+    text-decoration: none;
+    /* transition: 0.1s ease; */
+    color: rgb(2, 87, 197);
+    box-shadow: 0px 1px 2px darkgrey;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-link:hover {
+    background-color: rgb(20, 69, 133);
+    color: aliceblue;
+}
+
+.active {
+    background-color: rgb(14, 85, 177);
+    color: aliceblue;
+}
+
+.nav-link span {
+    display: inline-block;
+    overflow-x: hidden;
+    transition: 0.6s ease;
+}
+
+span.icon {
+    color: rgb(12, 91, 194);
+    padding: 4px;
+    transition: 0.6s ease;
+}
+
+span.desc {
+    font-size: 0.9rem;
+}
+
+.nav-link:hover span.icon,
+.active span.icon {
+    color: aliceblue;
+    transition: 0.6s ease;
+}
+
+.tool-tipper {
+    position: relative;
+    max-width: 100%;
+}
+
+.show-links .tool-tipper:hover .tool-tip {
+    display: none;
+}
+
+.tool-tip {
+    position: absolute;
+    top: 90%;
+    left: 150%;
+    display: none;
+    transform: translate(-50%, -50%);
+    background: rgb(32, 32, 32);
+    z-index: 7;
+    width: max-content;
+    text-align: center;
+    padding: 5px;
+    border-radius: 2px;
+    color: whitesmoke;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.tool-tipper:hover .tool-tip {
+    display: block;
+}
+
+
+main {
+    background-color: rgb(240, 240, 240);
+    flex: 1;
+    padding: 10px;
+}
+
+footer {
+    padding: 12px 5px;
+    background-color: rgb(204, 218, 231);
+    display: grid;
+    min-height: 35px;
+    align-items: center;
+    text-align: center;
+    /* border-top: 1px solid #9c9c2e; */
+}
+
+div.footer {
+    font-family: system-ui;
+    color: rgb(12, 91, 194);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+a.developer {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-decoration: none;
+    color: rgb(0, 223, 130);
+    transition: 0.5s ease;
+}
+
+a.developer:hover {
+    color: rgb(184, 184, 184);
+}

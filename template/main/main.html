@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if page_name %}
+    <title>LECTURE REMINDER SYSTEM || {{page_name}}</title>
+    {% else %}
+    <title>LECTURE REMINDER SYSTEM </title>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'main/main.css' %}">
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    <link rel="stylesheet" href="{% static 'main/main_responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    <link rel="shortcut icon" href="{% static 'styles/images/aaua_logo.png' %}" type="image/x-icon">
+</head>
+<!-- 
+    "page_name"
+"active_name"
+ -->
+
+<body>
+    <div class="overall">
+        <header>
+            <div class="app-name small-header" title="App Name: Task Management System">
+                <h1 class="title"> <span class="icon"> <i class="fa fa-tasks"></i> </span> <span class="full-name">
+                        LRS</span></h1>
+            </div><!-- div.app-name -->
+
+            <nav>
+                <div class="nav-control">
+                    <button type="button" class="bar-controller"> <i class="fas fa-bars"></i> </button>
+                </div><!-- div.nav-control -->
+                <div class="user-area">
+                    {% if request.user.profile.is_lecturer %}
+                    <a title="Update Profile" href="{% url 'update_lecturer_profile' %}">
+                        {% else %}
+                        <a title="Update Profile" href="{% url 'update_profile' %}">
+                            {% endif %}
+                            <i class="fa fa-user-cog"></i>
+                            {{request.user.username}}
+                        </a>
+
+                </div><!-- div.user-area -->
+            </nav><!-- nav -->
+        </header>
+
+        <!-- The MAJOR STYLE FOR SLIDING ON AND OFF OF THE SIDE BAR IS IN main_responsive.css -->
+        <!-- "hide-links" and "show-links" class will be used for this purpose -->
+        <section class="page-content">
+            <aside class="hide-links">
+                <ul class="nav-links-cover">
+                    {% include 'main/sidebar.html' %}
+                    <li>
+                        <a href="{% url 'logout' %}" class="nav-link tool-tipper"><span class="icon"> <i
+                                    class="fa fa-arrow-right-from-bracket"></i> </span> <span class="desc">Logout</span>
+                            <p class="tool-tip">Logout</p>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+            <main>
+                <!-- <h3>Page Content Here</h3> -->
+
+                {% block content %}
+
+
+                {% endblock %}
+
+            </main><!-- main -->
+        </section><!-- section.page-content-->
+        <footer>
+            <div class="footer">Lecture Reminder System, 2024.</div>
+        </footer>
+    </div><!-- div.overall -->
+
+
+    <script src="{% static 'main/main.js' %}"></script>
+    <script src="{% static 'jquery.js' %}"></script>
+
+</body>
+
+</html>

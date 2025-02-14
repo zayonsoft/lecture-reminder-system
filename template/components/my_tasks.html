@@ -1,0 +1,219 @@
+{% extends 'main/main.html' %}
+{% block content %}
+
+<style>
+    section.home-cover {
+        font-family: system-ui;
+        padding: 5px;
+        display: grid;
+        gap: 15px;
+    }
+
+    div.user-details {
+        display: grid;
+        gap: 10px;
+    }
+
+    p.each-detail {
+        padding: 10px;
+        padding-right: 25px;
+        background-color: rgb(0, 65, 109);
+        color: aliceblue;
+        width: max-content;
+        border-radius: 0px 15px 15px 0px;
+        box-shadow: 1px 2px 2px grey;
+    }
+
+    div.task-list-cover {
+        text-align: center;
+        display: grid;
+        gap: 20px;
+        max-width: 100%;
+        padding: 8px;
+        box-shadow: 0px 0px 2px grey;
+        border-radius: 4px;
+        overflow-x: scroll;
+    }
+
+    div.task-list-cover::-webkit-scrollbar {
+        background: transparent;
+        height: 7px;
+    }
+
+    div.task-list-cover::-webkit-scrollbar-thumb {
+        background: grey;
+    }
+
+    .section-header {
+        font-weight: 500;
+        font-family: system-ui;
+        font-size: 1.3rem;
+        color: rgb(10, 33, 51);
+    }
+
+    .create-task {
+        background-color: rgb(0, 47, 109);
+        border-radius: 3px;
+        display: block;
+        padding: 7px 10px;
+        width: max-content;
+        color: whitesmoke;
+        text-decoration: none;
+        font-size: 0.85rem;
+        justify-self: right;
+    }
+
+    .task-table {
+        max-width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+    }
+
+    .task-table th,
+    .task-table td {
+        padding: 8px;
+    }
+
+    .task-table th {
+        background: rgb(0, 65, 109);
+        font-weight: 400;
+        color: aliceblue;
+        font-size: 0.95rem;
+    }
+
+    .task-table td {
+        font-size: 0.9rem;
+        font-family: system-ui;
+        color: #252525;
+    }
+
+    .task-table tr {
+        background: rgb(221, 221, 221);
+    }
+
+    .task-table tr:nth-child(2n) {
+        background: rgb(255, 244, 244);
+    }
+
+    .view-task,
+    .perform-task {
+        background-color: rgb(0, 65, 109);
+        border-radius: 3px;
+        display: block;
+        padding: 5px 10px;
+        width: max-content;
+        color: whitesmoke;
+        text-decoration: none;
+        font-size: 0.78rem;
+        margin: auto;
+    }
+
+    .view-task:hover,
+    .perform-task:hover {
+        background-color: rgb(37, 76, 102);
+    }
+
+    .delete-task {
+        background: rgb(153, 18, 18);
+        color: whitesmoke;
+        padding: 5px 10px;
+        font-size: 0.78rem;
+        border-radius: 3px;
+        text-decoration: none;
+    }
+</style>
+
+<section class="home-cover">
+
+    <div class="task-list-cover">
+        <h2 class="section-header">Tasks Created</h2>
+        {% for message in messages %}
+        {% if message.tags == "success" %}
+        <p class="response-message success">{{message}}</p>
+        {% else %}
+        <p class="response-message error">{{message}}</p>
+        {% endif %}
+        {% endfor %}
+        <a href="{% url 'add_task' %}" class="create-task">Create Task <i class="fa fa-plus"></i> </a>
+        <table class="task-table">
+
+            <colgroup>
+                <col style="width: 5%;">
+                <col style="width: 15%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 15%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+                <col style="width: 10%;">
+            </colgroup>
+
+            <tr>
+                <th>S/N</th>
+                <th>Task</th>
+                <th>Course</th>
+                <th>Date Added</th>
+                <th>Due Date</th>
+                <th>Replies</th>
+                <th>-</th>
+                <th>-</th>
+                <th>-</th>
+            </tr>
+            {% for task in tasks %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td><b>{{task.task_type}}</b></td>
+                <td>{{task.course.course_code}}</td>
+                <td>{{task.date_created}}</td>
+                <td>{{task.due_date}}</td>
+                <td> <a href="{% url 'view_task_replies' task.id %}" class="view-task">View Replies
+                        ({{task.taskreply_set.all.count}})</a></td>
+                <td> <a href="{% url 'view_task' task.id %}" class="view-task">View</a> </td>
+                <td> <a href="{% url 'edit_task' task.id %}" class="view-task">Edit</a> </td>
+                <td> <a href="{% url 'delete_task' task.id %}" class="delete-task">Delete</a> </td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div><!-- div.task-list-cover -->
+</section><!-- section.home-cover -->
+
+<form action="" method="POST" class="delete-task-form">
+    {% csrf_token %}
+</form>
+
+{% include "popups/confirmation_dialog.html" %}
+
+<script>
+    function activateDeleteBtns() {
+        let deleteLinks = document.querySelectorAll(".delete-task");
+        let deleteForm = document.querySelector(".delete-task-form");
+        deleteLinks.forEach(function (link) {
+            link.addEventListener("click", function (e) {
+                let clickedLink = e.currentTarget;
+                e.preventDefault();
+                showConfirmationDialog("Are You Sure You Want to Delete this Task<br /><b>Note:All data related will be lost</b>");
+                let deleteUrl = clickedLink.getAttribute("href");
+                deleteForm.setAttribute("action", deleteUrl);
+
+            });
+        });
+    }
+
+    function activateConfirmBtn() {
+        let deleteForm = document.querySelector(".delete-task-form");
+        let confirmBtn = document.querySelector("button.confirm-btn");
+        confirmBtn.addEventListener("click", function () {
+            deleteForm.submit();
+
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        activateDeleteBtns();
+        activateConfirmBtn();
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% if request.user.profile.is_lecturer %}
+{% include 'main/lecturer_side.html' %}
+{% endif %}
+
+{% if request.user.profile.is_student %}
+{% include 'main/student_side.html' %}
+{% endif %}
+
+{% if request.user.profile.is_admin %}
+{% include 'main/admin_side.html' %}
+{% endif %}
+
+
+<li>
+    <a href="{% url 'change_password' %}"
+        class="nav-link {% if active_name == 'change_password' %}active{% endif %} tool-tipper"><span class="icon"> <i
+                class="fa fa-key"></i>
+        </span> <span class="desc">Change Password</span>
+        <p class="tool-tip">Change Password</p>
+    </a>
+</li>
