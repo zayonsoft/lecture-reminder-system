@@ -15,12 +15,32 @@
 
 <body>
     <h3>TASK REMINDER FROM LECTURE REMINDER SYSTEM</h3>
-    <small>From zayonsoft CGPA CALCULATOR</small>
-    <br><br>
-    <p>Dear __current_user__, Task Reminder For __today's date..</p>
+    <small>
+        <p>
+            &copy; Powered By
+            <a class="developer-link" href="http://wa.me/+2348104465980">zayonSoft</a>
+        </p>
+    </small>
     <br>
-      
+
+    <p>Dear {{student.username}}, Task Reminder For {{current_date}}</p>
     <br>
+    <small>Here Are Your Tasks For Today</small>
+    <table>
+        <tr>
+            <th>S/N</th>
+            <th>Task Type</th>
+            <th>Due Time</th>
+        </tr>
+        {% for task in todays_tasks %}
+        <tr>
+            <td> {{forloop.counter}} </td>
+            <td> {{task.task_type.name}} </td>
+            <td>{{task.due_date}}</td>
+            <td> <a href="{% url 'view_task' task.id %}">View</a> </td>
+        </tr>
+        {% endfor %}
+    </table>
 
     <br>
     <hr>

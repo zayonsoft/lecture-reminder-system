@@ -34,7 +34,7 @@ def addLevel(request):
     
     context = {"previous_name": previous_name}
     
-    return render(request, f'{base_path}/levels/levels.html', context)
+    return render(request, f'{base_path}/levels/add_level.html', context)
     
             
 
