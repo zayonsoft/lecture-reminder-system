@@ -11,6 +11,20 @@
             margin: 0;
         }
     </style>
+    <style>
+        tr {
+            padding: 5px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: 1px solid grey;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,23 +37,33 @@
     </small>
     <br>
 
-    <p>Dear {{student.username}}, Task Reminder For {{current_date}}</p>
+    <p>Dear {{user.username}}, Task Reminder For {{current_date}}</p>
     <br>
     <small>Here Are Your Tasks For Today</small>
     <table>
         <tr>
             <th>S/N</th>
+            <th>Course Code</th>
             <th>Task Type</th>
+            <th>Description</th>
             <th>Due Time</th>
+            <th>link</th>
         </tr>
         {% for task in todays_tasks %}
         <tr>
             <td> {{forloop.counter}} </td>
+            <td> {{task.course.course_code}} </td>
             <td> {{task.task_type.name}} </td>
+            <td>{{task.description | truncatechars:30 }}</td>
             <td>{{task.due_date}}</td>
             <td> <a href="{% url 'view_task' task.id %}">View</a> </td>
         </tr>
         {% endfor %}
+        {% if todays_tasks.count == 0 %}
+        <tr>
+            <td colspan="6"> No Task For Today Yet... </td>
+        </tr>
+        {% endif %}
     </table>
 
     <br>

@@ -40,10 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'remindapp.apps.RemindappConfig',
-    'django_cron',
 ]
 
 MIDDLEWARE = [
+    'remindapp.middleware.RefreshSessionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -134,6 +134,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR/"media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CRONJOBS = [
+    ('* * * * *', 'remindapp.tasks.sendReminderMail'),
+    # Add more cron jobs as needed
+]
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"

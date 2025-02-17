@@ -21,16 +21,20 @@ def addLevel(request):
     previous_name = ''
     if request.method == "POST":
         name = request.POST.get('name')
-        if not name and name.strip():
-            messages.error(request, "Level Already Exists")
+        if not (name and name.strip()):
+            messages.error(request, "Name Cannot Be Empty..")
             return redirect("add_level")
         
         name = name.strip()
         previous_name = name 
         
-        if not Level.objects.filter(name__iexact = name ).exists():
+        if Level.objects.filter(name__iexact = name ).exists():
             messages.error(request, "Level Already Exists")
             return redirect("add_level")
+        
+        Level.objects.create(name = name)
+        messages.success(request, 'Level Added Successfully')
+        return redirect("levels")
     
     context = {"previous_name": previous_name}
     
