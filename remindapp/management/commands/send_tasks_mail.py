@@ -5,6 +5,7 @@ from django.utils.html import strip_tags
 from datetime import datetime
 
 from django.conf import settings
+from decouple import config
 
 from remindapp.models import Task, Profile
 
@@ -24,6 +25,7 @@ class Command(BaseCommand):
                 "current_user":student.user,
                 "current_date": datetime.strftime(datetime.now(), "%d - %m -%Y"),
                 "user": student.user,
+                "host_url":config('HOST_URL', default="")
             }
             html_content = render_to_string('email_template.html', context)
         

@@ -10,5 +10,6 @@ class RefreshSessionMiddleware:
         response = self.get_response(request)
         if request.user.is_authenticated:
             # Extend session expiry on activity
-            request.session.set_expiry(now() + timedelta(seconds=3600))  # Extend by 1 hour
+            one_hour = 60*60
+            request.session.set_expiry(now() + timedelta(seconds=one_hour))  # Extend by 1 hour
         return response
