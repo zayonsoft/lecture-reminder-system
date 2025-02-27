@@ -2,8 +2,13 @@ from django.shortcuts import render, redirect
 from remindapp.models import Level, Course
 from django.contrib import messages
 
+from remindapp.decorators import admin_dashboard, authenticated_user
+
 base_path = 'components/admins'
 
+
+@authenticated_user
+@admin_dashboard
 def home(request):
     context={
     "page_name":"ADMIN HOME",
@@ -11,12 +16,17 @@ def home(request):
     }
     return render(request, f'{base_path}/admin_home.html', context)
 
+
+@authenticated_user
+@admin_dashboard
 def level(request):
     levels = Level.objects.all()
     context={'levels':levels}
     return render(request, f'{base_path}/levels/levels.html', context)
 
 
+@authenticated_user
+@admin_dashboard
 def addLevel(request):
     previous_name = ''
     if request.method == "POST":
@@ -41,7 +51,8 @@ def addLevel(request):
     return render(request, f'{base_path}/levels/add_level.html', context)
     
             
-
+@authenticated_user
+@admin_dashboard
 def courses(request):
     courses = Course.objects.all()
     context={'courses':courses}

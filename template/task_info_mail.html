@@ -32,43 +32,25 @@
     <small>
         <p>
             &copy; Powered By
-            <a class="developer-link" href="https://wa.me/+2348104465980">zayonSoft</a>
+            <a class="developer-link" href="http://wa.me/+2348104465980">zayonSoft</a>
         </p>
     </small>
     <br>
 
-    <p>Dear {{user.username}}, Task Reminder For {{current_date}}</p>
+    <p>Dear {{user.username}},<br /> {{message_header}}</p>
     <br>
-    {% if not user.profile.is_lecturer %}
-    <small>Here Are Your Tasks For Today</small>
-    {% else %}
-    <small>Some of The Tasks You Created are Expiring Today....</small>
+    {% if task.created_by == user  %}
+    <small>A Task Created By You</small>
     {% endif %}
-    <table>
-        <tr>
-            <th>S/N</th>
-            <th>Course Code</th>
-            <th>Task Type</th>
-            <th>Description</th>
-            <th>Due Time</th>
-            <th>link</th>
-        </tr>
-        {% for task in todays_tasks %}
-        <tr>
-            <td> {{forloop.counter}} </td>
-            <td> {{task.course.course_code}} </td>
-            <td> {{task.task_type.name}} </td>
-            <td>{{task.description | truncatechars:30 }}</td>
-            <td>{{task.due_date}}</td>
-            <td> <a href="{% url 'view_task' task.id %}">View</a> </td>
-        </tr>
-        {% endfor %}
-        {% if todays_tasks.count == 0 %}
-        <tr>
-            <td colspan="6"> No Task For Today Yet... </td>
-        </tr>
-        {% endif %}
-    </table>
+
+    <h3 style="padding: 5px;">The Details of The Task Below:</h3>
+    <ul style="list-style: none; display: grid;gap: 5px;">
+        <li style="border-bottom: 1px solid dimgrey;padding: 5px; ">Course: {{task.course_code}} </li>
+        <li style="border-bottom: 1px solid dimgrey;padding: 5px; ">Type: {{task.task_type.name}} </li>
+        <li style="border-bottom: 1px solid dimgrey;padding: 5px; ">Description: {{task.description}} </li>
+        <li style="padding: 5px; ">Due Date: {{task.due_date} </li>
+    </ul>
+
 
     <br>
     <hr>
@@ -90,10 +72,10 @@
             <a class="developer-link" href="http://wa.me/+2348104465980">zayonSoft</a> 2024 - <span
                 class="current_year">{{current_date.year}}</span>
             || All Rights Reserved.
-        </p>
-        </p>
-    </footer>
-    </div><!-- div.view-message-cover -->
+            </p>
+            </p>
+            </footer>
+            </div><!-- div.view-message-cover -->
 
 
 </body>

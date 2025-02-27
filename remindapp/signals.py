@@ -1,6 +1,7 @@
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
-from remindapp.models import Profile
+from remindapp.models import Profile, Task
+from remindapp.task_alert import sendTaskMail
 
 def createUser(sender, instance, created, **kwargs):
     if created:
@@ -26,5 +27,18 @@ def createProfile(sender, instance, created, **kwargs):
             if created_user.is_superuser:
                 Profile.objects.create(profile_id = created_user.username, user = created_user, is_admin = True)
 
-
 post_save.connect(createProfile, sender= User)
+
+
+def sendTaskNotification(sender, instance,created, **kwargs):
+    message_header = None
+    if created:
+        message_header = "THIS IS TO INFORM YOU THAT A TASK WAS CREATED"
+        task = instance
+    else:
+        message_header = "THIS IS TO INFORM YOU THAT A TASK WAS CREATED"
+        task = instance
+        
+    sendTaskMail(task, message_header)
+
+post_save.connect(sendTaskNotification, sender=Task)

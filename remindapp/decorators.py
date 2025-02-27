@@ -59,12 +59,24 @@ def no_admins(view_func):
         
     return wrapper_func
 
-
+'''
 def admin_dashboard(view_func):
     def wrapper_func(request, *args, **kwargs):
         if request.user.profile.is_admin:
             return view_func(request, *args, **kwargs)
         
+        elif request.user.profile.is_student:
+            return redirect("dashboard")
+        
+        elif request.user.profile.is_lecturer:
+            return redirect("lecturer_dashboard")
+    return wrapper_func
+'''
+
+def admin_dashboard(view_func):
+    def wrapper_func(request, *args, **kwargs):
+        if request.user.profile.is_admin:
+            return redirect("/admin/")
         elif request.user.profile.is_student:
             return redirect("dashboard")
         
