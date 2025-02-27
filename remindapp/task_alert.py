@@ -42,9 +42,11 @@ def sendTaskMail(task, message_header):
     msg2 = EmailMultiAlternatives("TASK NOTIFICATION", text_content, settings.EMAIL_HOST_USER, [task.user.email])
     msg2.attach_alternative(html_content, "text/html")
     try:
+    # if 1:
         msg.send()
         print("Task Owner Mail Successfully Sent")
     except:
+    # else:
         print("Couldn't Send Mail to Creator")
     
         
