@@ -7,6 +7,7 @@ from remindapp.year_developed import year_developed
 from django.conf import settings
 
 def sendTaskMail(task, message_header):
+    context={}
     profiles = task.level.profile_set.all()
     sent = 0
     not_sent = 0
@@ -42,6 +43,9 @@ def sendTaskMail(task, message_header):
             
             
     #for the creator
+    context["user"] = task.user
+    html_content = render_to_string('task_info_mail.html', context)
+    
     msg2 = EmailMultiAlternatives("TASK NOTIFICATION", text_content, settings.EMAIL_HOST_USER, [task.user.email])
     msg2.attach_alternative(html_content, "text/html")
     try:
@@ -53,4 +57,4 @@ def sendTaskMail(task, message_header):
         print("Couldn't Send Mail to Creator")
     
         
-    print(f"{sent} Mail(s) Sent, {not_sent} Unsent!!")
+    print(f"{sent} Student Mail(s) Sent, {not_sent} Unsent!!")

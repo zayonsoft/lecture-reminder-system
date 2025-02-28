@@ -39,7 +39,7 @@
 
     <p>Dear {{user.username}},<br /> {{message_header}}</p>
     <br>
-    {% if task.created_by == user  %}
+    {% if task.user == user  %}
     <small>A Task Created By You</small>
     {% endif %}
 
