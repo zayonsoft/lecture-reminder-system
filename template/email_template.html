@@ -9,20 +9,57 @@
         * {
             padding: 0;
             margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
-    </style>
-    <style>
-        tr {
+
+        .tasks-cover {
+            width: 95%;
+            margin: auto;
+        }
+
+        .each-task {
+            display: grid;
+            width: 100%;
+            gap: 2px;
+            box-shadow: 0px 0px 2px #ccc;
             padding: 5px;
         }
 
-        table {
-            border-collapse: collapse;
+        .task-details {
+            display: flex;
         }
 
-        td,
-        th {
-            border: 1px solid grey;
+        .number-cover {
+            padding: 10px;
+            width: 20px;
+            display: grid;
+            align-content: center;
+            box-shadow: 0px 0px 2px grey;
+        }
+
+        .details-cover {
+            display: grid;
+            gap: 2px;
+            flex: 1;
+        }
+
+        .each-detail {
+            padding: 7px;
+            box-shadow: 0px 0px 2px grey;
+        }
+
+        .view-task {
+            text-align: center;
+            display: block;
+            background-color: rgb(12, 25, 201);
+            padding: 5px;
+            text-decoration: none;
+            color: whitesmoke;
+            transition: 0.5s ease;
+        }
+
+        .view-task:hover {
+            background-color: rgb(5, 14, 150);
         }
     </style>
 </head>
@@ -44,32 +81,33 @@
     {% else %}
     <small>Some of The Tasks You Created are Expiring Today....</small>
     {% endif %}
-    <table>
-        <tr>
-            <th>S/N</th>
-            <th>Course Code</th>
-            <th>Task Type</th>
-            <th>Description</th>
-            <th>Due Time</th>
-            <th>link</th>
-        </tr>
-        {% for task in todays_tasks %}
-        <tr>
-            <td> {{forloop.counter}} </td>
-            <td> {{task.course.course_code}} </td>
-            <td> {{task.task_type.name}} </td>
-            <td>{{task.description | truncatechars:30 }}</td>
-            <td>{{task.due_date}}</td>
-            <td> <a href="{{host_url}}{% url 'view_task' task.id %}">View</a> </td>
-        </tr>
-        {% endfor %}
-        {% if todays_tasks.count == 0 %}
-        <tr>
-            <td colspan="6"> No Task For Today Yet... </td>
-        </tr>
-        {% endif %}
-    </table>
 
+    <section class="tasks-cover">
+
+        {% for task in todays_tasks %}
+        <section class="each-task">
+            <div class="task-details">
+                <div class="number-cover">
+                    <span class="number">{{forloop.counter}}</span>
+                </div>
+                <div class="details-cover">
+                    <p class="each-detail"><b>Task Type: </b> {{task.task_type.name}} </p>
+                    <p class="each-detail"><b>Course Code: </b> {{task.course.course_code}} </p>
+                    <p class="each-detail"><b>Description: </b>{{task.description | truncatechars:30 }} </p>
+                    <p class="each-detail"><b>Due/Expiry Date : </b> {{task.due_date}} </p>
+                    <a class="view-task" href="{{host_url}}{% url 'view_task' task.id %}">View</a>
+                </div>
+            </div>
+        </section>
+        {% endfor %}
+
+        {% if todays_tasks.count == 0 %}
+        <section class="each-task">
+            <p style="text-align: center;">No Task For Today Yet...</p>
+        </section>
+        {% endif %}
+
+    </section><!-- tasks-cover -->
     <br>
     <hr>
     <footer style="
@@ -85,13 +123,21 @@
                 color: rgb(2, 167, 158);
             }
         </style>
+        {% if current_year == year_developed %}
         <p>
             &copy; Powered By
-            <a class="developer-link" href="http://wa.me/+2348104465980">zayonSoft</a> 2024 - <span
-                class="current_year">{{current_date.year}}</span>
+            <a class="developer-link" href="https://wa.me/+2348104465980">zayonSoft</a>
+            {{year_developed}} - <span class="current_year">{{current_year}}</span>
             || All Rights Reserved.
         </p>
+        {% else %}
+        <p>
+            &copy; Powered By
+            <a class="developer-link" href="https://wa.me/+2348104465980">zayonSoft</a>
+            <span class="current_year">{{current_year}}</span>
+            || All Rights Reserved.
         </p>
+        {% endif %}
     </footer>
     </div><!-- div.view-message-cover -->
 

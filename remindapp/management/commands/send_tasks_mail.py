@@ -6,8 +6,8 @@ from datetime import datetime
 
 from django.conf import settings
 from decouple import config
-
 from remindapp.models import Task, Profile
+from remindapp.year_developed import year_developed
 
 class Command(BaseCommand):
     help = "Send daily task reminder emails to users."
@@ -25,7 +25,9 @@ class Command(BaseCommand):
                 "current_user":student.user,
                 "current_date": datetime.strftime(datetime.now(), "%d - %m -%Y"),
                 "user": student.user,
-                "host_url":config('HOST_URL', default=""),
+                "host_url":config('HOST_URL', default=""),    
+                "year_developed": year_developed ,
+                "current_year": datetime.now().year ,
             }
             html_content = render_to_string('email_template.html', context)
         
@@ -61,6 +63,8 @@ class Command(BaseCommand):
                 "current_date": datetime.strftime(datetime.now(), "%d - %m -%Y"),
                 "user": lecturer.user,
                 "host_url":config('HOST_URL', default=""),
+                "year_developed": year_developed ,
+                "current_year": datetime.now().year ,
             }
             html_content = render_to_string('email_template.html', context)
         
