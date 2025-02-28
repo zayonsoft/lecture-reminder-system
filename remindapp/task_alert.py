@@ -2,6 +2,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from datetime import datetime
+from remindapp.year_developed import year_developed
 
 from django.conf import settings
 
@@ -20,6 +21,8 @@ def sendTaskMail(task, message_header):
             "current_date": datetime.strftime(datetime.now(), "%d - %m -%Y"),
             "user": student.user,
             "created_by":task.user,
+            "year_developed": year_developed ,
+            "current_year": datetime.now().year ,
         }
         html_content = render_to_string('task_info_mail.html', context)
     
@@ -43,7 +46,7 @@ def sendTaskMail(task, message_header):
     msg2.attach_alternative(html_content, "text/html")
     try:
     # if 1:
-        msg.send()
+        msg2.send()
         print("Task Owner Mail Successfully Sent")
     except:
     # else:

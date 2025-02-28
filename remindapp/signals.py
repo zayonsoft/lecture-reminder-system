@@ -33,10 +33,10 @@ post_save.connect(createProfile, sender= User)
 def sendTaskNotification(sender, instance,created, **kwargs):
     message_header = None
     if created:
-        message_header = "THIS IS TO INFORM YOU THAT A TASK WAS CREATED"
+        message_header = "THIS IS TO INFORM YOU THAT A TASK WAS CREATED DETAILS BELOW"
         task = instance
     else:
-        message_header = "THIS IS TO INFORM YOU THAT A TASK WAS CREATED"
+        message_header = "THIS IS TO INFORM YOU THAT A TASK WAS MODIFIED OR EDITED, DETAILS BELOW"
         task = instance
         
     sendTaskMail(task, message_header)
