@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 "current_user":student.user,
                 "current_date": datetime.strftime(datetime.now(), "%d - %m -%Y"),
                 "user": student.user,
-                "host_url":config('HOST_URL', default="")
+                "host_url":config('HOST_URL', default=""),
             }
             html_content = render_to_string('email_template.html', context)
         
@@ -51,7 +51,7 @@ class Command(BaseCommand):
         lecturer_not_sent = 0
         
         for lecturer in lecturers:
-            lecturer_tasks = Task.objects.filter(user = lecturer.user).order_by("due_date")
+            lecturer_tasks = Task.objects.filter(user = lecturer.user, due_date__date = datetime.today()).order_by("due_date")
             
             lecturer_email = lecturer.user.email
             recipient_list = [lecturer_email]
@@ -60,6 +60,7 @@ class Command(BaseCommand):
                 "current_user":lecturer.user,
                 "current_date": datetime.strftime(datetime.now(), "%d - %m -%Y"),
                 "user": lecturer.user,
+                "host_url":config('HOST_URL', default=""),
             }
             html_content = render_to_string('email_template.html', context)
         
