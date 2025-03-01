@@ -49,7 +49,65 @@ def addLevel(request):
     context = {"previous_name": previous_name}
     
     return render(request, f'{base_path}/levels/add_level.html', context)
+
+
+@authenticated_user
+@admin_dashboard
+def editLevel(request, pk):
+    if not pk.isdigit():
+        messages.error(request, "Something Went Wrong!")
+        return redirect("levels")
     
+    if not Level.objects.filter(id = pk).exists():
+        messages.error(request, "Data Not Found!")
+        return redirect("levels")
+    
+    level = Level.objects.get(id = pk)
+    context={"level":level}
+    
+    if request.method == "POST":
+        name = request.POST.get('name')
+        if not (name and name.strip()):
+            messages.error(request, "Name Cannot Be Empty..")
+            return redirect("edit_level",level.id)
+        
+        name = name.strip()
+        
+        if level.name.upper() == name.upper():
+            messages.error(request, "Unchanged Data")
+            return redirect("edit_level",level.id)
+        
+        if Level.objects.filter(name__iexact = name ).exists():
+            messages.error(request, f"'{name}' Already Exists!")
+            return redirect("edit_level",level.id)
+        
+        level.name = name
+        level.save()
+        messages.success(request, 'Data Updated Successfully')
+        return redirect("levels")
+        
+    return render(request, f'{base_path}/levels/edit_level.html', context)
+
+
+@authenticated_user
+@admin_dashboard
+def deleteLevel(request, pk):
+    if not request.method == "POST":
+        messages.error(request, "Method Disallowed!")
+        
+    if not pk.isdigit():
+        messages.error(request, "Something Went Wrong!")
+        return redirect("levels")
+    
+    if not Level.objects.filter(id = pk).exists():
+        messages.error(request, "Data Not Found!")
+        return redirect("levels")
+    
+    level = Level.objects.get(id = pk)
+    level.delete()
+    messages.success(request, "Deleted Successfully")
+    return redirect("levels")
+
             
 @authenticated_user
 @admin_dashboard

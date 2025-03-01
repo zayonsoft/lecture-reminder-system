@@ -1,0 +1,54 @@
+{% extends 'main/main.html' %}
+{% block content %}
+<style>
+    .tailwind-content * {
+        padding: revert-layer;
+        margin: revert-layer;
+    }
+</style>
+<div class="tailwind-content w-full max-w-xs">
+    <form method="POST" action="{% url 'edit_level' level.id %}"
+        class="grid gap-3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+        <h2 class="text-center text-blue-900 font-bold">Edit Level</h2>
+        <div class="grid gap-1">
+            <label class="block ml-0.5 text-gray-600 text-sm font-bold" for="level_name">
+                Name
+            </label>
+            {% if not messages %}
+
+            <input
+                class="block shadow appearance-none border border-gray-400 rounded py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline placeholder:text-sm"
+                name="name" id="level_name" type="text" placeholder="Add Name" value="{{level.name}}">
+
+            {% else %}
+            <input
+                class="block shadow appearance-none border border-red-400 rounded py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline placeholder:text-sm"
+                name="name" id="level_name" type="text" placeholder="Add Name" value="{{level.name}}">
+
+            {% for message in messages %}
+
+            {% if not message.tags == 'success' %}
+            <p class="text-red-500 text-xs italic ml-0.5">{{message}}</p>
+            {% else %}
+            <p class="text-gray-600 text-xs italic ml-0.5">{{message}}</p>
+            {% endif %}
+            {% endfor %}
+
+            {% endif %}
+        </div>
+
+
+        <div class="flex items-center w-full justify-between">
+            <a class="block bg-gray-400 text-gray-200 font-bold py-1.5 px-2 rounded hover:bg-gray-600"
+                href="{% url 'levels' %}"> <i class="fa fa-arrow-left"></i>
+                Back</a>
+            <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-2 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

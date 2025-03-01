@@ -1,5 +1,8 @@
 from django.shortcuts import redirect
 from django.contrib import messages, auth
+from decouple import config
+
+DEBUG = config("DEBUG", cast=bool)
 
 def authenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
@@ -59,28 +62,30 @@ def no_admins(view_func):
         
     return wrapper_func
 
-'''
-def admin_dashboard(view_func):
-    def wrapper_func(request, *args, **kwargs):
-        if request.user.profile.is_admin:
-            return view_func(request, *args, **kwargs)
-        
-        elif request.user.profile.is_student:
-            return redirect("dashboard")
-        
-        elif request.user.profile.is_lecturer:
-            return redirect("lecturer_dashboard")
-    return wrapper_func
-'''
-
-def admin_dashboard(view_func):
-    def wrapper_func(request, *args, **kwargs):
-        if request.user.profile.is_admin:
-            return redirect("/admin/")
-        elif request.user.profile.is_student:
-            return redirect("dashboard")
-        
-        elif request.user.profile.is_lecturer:
-            return redirect("lecturer_dashboard")
-        
-    return wrapper_func
+# Making the created admin panel work in development
+if DEBUG:
+    
+    def admin_dashboard(view_func):
+        def wrapper_func(request, *args, **kwargs):
+            if request.user.profile.is_admin:
+                return view_func(request, *args, **kwargs)
+            
+            elif request.user.profile.is_student:
+                return redirect("dashboard")
+            
+            elif request.user.profile.is_lecturer:
+                return redirect("lecturer_dashboard")
+        return wrapper_func
+    
+else:
+    def admin_dashboard(view_func):
+        def wrapper_func(request, *args, **kwargs):
+            if request.user.profile.is_admin:
+                return redirect("/admin/")
+            elif request.user.profile.is_student:
+                return redirect("dashboard")
+            
+            elif request.user.profile.is_lecturer:
+                return redirect("lecturer_dashboard")
+            
+        return wrapper_func

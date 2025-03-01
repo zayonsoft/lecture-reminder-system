@@ -23,7 +23,7 @@ def sendTaskMail(task, message_header):
             "user": student.user,
             "created_by":task.user,
             "year_developed": year_developed ,
-            "current_year": datetime.now().year ,
+            "current_year": datetime.now().year,
         }
         html_content = render_to_string('task_info_mail.html', context)
     
