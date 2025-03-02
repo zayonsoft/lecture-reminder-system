@@ -1,7 +1,12 @@
 <li>
-    <a href="{% url 'levels' %}" class="nav-link {% if active_name == 'my_tasks' %}active{% endif %} tool-tipper">
-        <span class="icon"> <i class="fa fa-signal"></i> </span> <span class="desc">Level</span>
+    <a href="{% url 'levels' %}" class="nav-link {% if active_name == 'levels' %}active{% endif %} tool-tipper">
+        <span class="icon"> <i class="fa fa-signal"></i> </span> <span class="desc">Levels</span>
         <p class="tool-tip">Levels</p>
     </a>
 </li>
+<li>
+    <a href="{% url 'courses' %}" class="nav-link {% if active_name == 'courses' %}active{% endif %} tool-tipper">
+        <span class="icon"> <i class="fa fa-book"></i> </span> <span class="desc">Courses</span>
+        <p class="tool-tip">Courses</p>
+    </a>
 </li>

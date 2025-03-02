@@ -29,7 +29,7 @@
         <div class="relative grid gap-1.5 w-full items-center">
             <div>
                 <a class="block ml-1 max-w-max bg-blue-800 text-sm hover:bg-blue-500 text-white p-1.5 rounded justify-end focus:outline-none focus:shadow-outline"
-                    href="{% url 'add_level' %}">New <i class="fa fa-plus"></i></a>
+                    href="{% url 'add_level' %}"><i class="fa fa-plus"></i> New </a>
             </div>
             <div
                 class="flex text-sm text-gray-900 border justify-self-end border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -111,7 +111,7 @@
 {% include "popups/confirmation_dialog.html" %}
 
 <script>
-    let objectName = "Task";
+    let objectName = "Level";
     function activateDeleteBtns() {
         let deleteLinks = document.querySelectorAll(".delete-level");
         let deleteForm = document.querySelector(".delete-level-form");
@@ -119,7 +119,7 @@
             link.addEventListener("click", function (e) {
                 let clickedLink = e.currentTarget;
                 e.preventDefault();
-                showConfirmationDialog(`Are You Sure You Want to Delete this ${objectName}<br /><b>Note:All data related will be lost</b>`);
+                showConfirmationDialog(`Are You Sure You Want to Delete this ${objectName}?<br /><b>Note: All related data will be lost</b>`);
                 let deleteUrl = clickedLink.getAttribute("href");
                 deleteForm.setAttribute("action", deleteUrl);
 

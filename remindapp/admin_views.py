@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from remindapp.models import Level, Course
+from remindapp.models import Level, Course, Department
 from django.contrib import messages
 
 from remindapp.decorators import admin_dashboard, authenticated_user
@@ -21,7 +21,10 @@ def home(request):
 @admin_dashboard
 def level(request):
     levels = Level.objects.all()
-    context={'levels':levels}
+    context={
+        'levels':levels,
+        "active_name":"levels",
+        }
     return render(request, f'{base_path}/levels/levels.html', context)
 
 
@@ -113,6 +116,22 @@ def deleteLevel(request, pk):
 @admin_dashboard
 def courses(request):
     courses = Course.objects.all()
-    context={'courses':courses}
+    context={
+        'courses':courses,
+        "active_name":"courses",
+        }
     return render(request, f'{base_path}/courses/courses.html', context)
+            
+            
+@authenticated_user
+@admin_dashboard
+def addCourse(request):
+    courses = Course.objects.all()
+    departments = Department.objects.all()
+    context={
+        'courses':courses,
+        "active_name":"courses",
+        "departments":departments,
+        }
+    return render(request, f'{base_path}/courses/add_course.html', context)
     

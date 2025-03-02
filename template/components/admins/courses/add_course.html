@@ -1,0 +1,70 @@
+{% extends 'main/main.html' %}
+{% block content %}
+<style>
+    .tailwind-content * {
+        padding: revert-layer;
+        margin: revert-layer;
+    }
+</style>
+<div class="tailwind-content w-full max-w-[650px]">
+    <form method="POST" action="{% url 'add_level' %}"
+        class="grid gap-3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        {% csrf_token %}
+        <h2 class="text-center text-blue-900 font-bold">Add Course</h2>
+        <div class="grid gap-1">
+            <label class="block ml-0.5 text-gray-600 text-sm font-bold" for="course_code">
+                Course Code
+            </label>
+
+            <input
+                class="block shadow appearance-none border border-gray-400 rounded py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline placeholder:text-sm"
+                name="name" id="course_code" type="text" placeholder="e.g VIO101" value="{{previous_name}}">
+        </div>
+
+        <div class="grid gap-1">
+            <label class="block ml-0.5 text-gray-600 text-sm font-bold" for="course_title">
+                Course Title
+            </label>
+            <input
+                class="block shadow appearance-none border border-gray-400 rounded py-2 px-3 text-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline placeholder:text-sm"
+                name="name" id="course_title" type="text" placeholder="e.g Introduction to Software"
+                value="{{previous_name}}">
+        </div>
+
+        <div class="grid gap-1">
+            <label class="block ml-0.5 text-gray-600 text-sm font-bold" for="course_title">
+                Department
+            </label>
+            <select
+                class="block appearance-none shadow-md rounded py-2 px-3 text-sm text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline placeholder:text-sm"
+                name="" id="">
+                <option selected="disabled" disabled="disabled" value=""> Select Department...</option>
+
+                {% for department in departments %}
+                <option value="{{department.id}}"> {{department.name}} </option>
+                {% endfor %}
+
+            </select>
+        </div>
+
+        {% for message in messages %}
+        {% if not message.tags == 'success' %}
+        <p class="text-red-500 text-xs italic ml-0.5">{{message}}</p>
+        {% else %}
+        <p class="text-gray-600 text-xs italic ml-0.5">{{message}}</p>
+        {% endif %}
+        {% endfor %}
+
+        <div class="flex items-center w-full justify-between">
+            <a class="block bg-gray-400 text-gray-200 font-bold py-1.5 px-2 rounded hover:bg-gray-600"
+                href="{% url 'courses' %}"> <i class="fa fa-arrow-left"></i>
+                Back</a>
+            <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-2 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
